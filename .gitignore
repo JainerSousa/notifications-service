@@ -1,6 +1,7 @@
-# compiled output
 .env
+*.mongodb
 
+# compiled output
 /dist
 /node_modules
 

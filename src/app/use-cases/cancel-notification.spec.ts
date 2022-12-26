@@ -1,4 +1,3 @@
-import { ObjectId } from 'bson';
 import { NotificationNotFoundError } from './errors/notification-not-found-error';
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
 import { CancelNotification } from './cancel-notification';
@@ -14,7 +13,7 @@ describe('Cancel Notification', () => {
     const { notification } = await sendNotification.execute({
       content: 'A new notification',
       category: 'social',
-      recipientId: new ObjectId().toString(),
+      recipientId: 'recipient-id',
     });
 
     await cancelNotification.execute({
@@ -33,7 +32,7 @@ describe('Cancel Notification', () => {
 
     expect(() => {
       return cancelNotification.execute({
-        notificationId: new ObjectId().toString(),
+        notificationId: 'fake-recipient-id',
       });
     }).rejects.toThrow(NotificationNotFoundError);
   });

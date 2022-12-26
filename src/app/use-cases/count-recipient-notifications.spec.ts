@@ -1,4 +1,3 @@
-import { ObjectId } from 'bson';
 import { makeNotification } from '@test/factories/notification-factory';
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
 import { CountRecipientNotifications } from './count-recipient-notifications';
@@ -11,16 +10,18 @@ describe('Count Recipient Notifications', () => {
       notificationsRepository,
     );
 
-    const recipientId = new ObjectId().toString();
-
-    await notificationsRepository.create(makeNotification({ recipientId }));
-    await notificationsRepository.create(makeNotification({ recipientId }));
     await notificationsRepository.create(
-      makeNotification({ recipientId: new ObjectId().toString() }),
+      makeNotification({ recipientId: 'recipient-id-1' }),
+    );
+    await notificationsRepository.create(
+      makeNotification({ recipientId: 'recipient-id-1' }),
+    );
+    await notificationsRepository.create(
+      makeNotification({ recipientId: 'recipient-id-2' }),
     );
 
     const { count } = await countRecipientNotifications.execute({
-      recipientId: recipientId,
+      recipientId: 'recipient-id-1',
     });
 
     expect(count).toEqual(2);

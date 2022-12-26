@@ -1,6 +1,9 @@
-import { Notification, NotificationProps } from './../../entities/notification';
-import { NotificationsRepository } from 'src/app/repositories/notifications-repository';
-import { Replace } from 'src/helpers/replace';
+import {
+  Notification,
+  NotificationProps,
+} from '@application/entities/notification';
+import { NotificationsRepository } from '@application/repositories/notifications-repository';
+import { Replace } from '@helpers/replace';
 
 export class InMemoryNotificationsRepository
   implements NotificationsRepository

@@ -1,6 +1,6 @@
 import { ObjectId } from 'bson';
 import { NotificationNotFoundError } from './errors/notification-not-found-error';
-import { InMemoryNotificationsRepository } from '../test/repositories/in-memory-notifications-repository';
+import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
 import { CancelNotification } from './cancel-notification';
 import { SendNotification } from './send-notification';
 

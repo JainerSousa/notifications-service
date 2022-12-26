@@ -1,14 +1,16 @@
 import { NotificationNotFoundError } from './errors/notification-not-found-error';
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
-import { CancelNotification } from './cancel-notification';
+import { UnreadNotification } from './unread-notification';
 import { SendNotification } from './send-notification';
+import { ReadNotification } from './read-notification';
 
-describe('Cancel Notification', () => {
-  it('should cancel the notification', async () => {
+describe('Unread Notification', () => {
+  it('should unread the notification', async () => {
     const notificationsRepository = new InMemoryNotificationsRepository();
 
     const sendNotification = new SendNotification(notificationsRepository);
-    const cancelNotification = new CancelNotification(notificationsRepository);
+    const readNotification = new ReadNotification(notificationsRepository);
+    const unreadNotification = new UnreadNotification(notificationsRepository);
 
     const { notification } = await sendNotification.execute({
       content: 'A new notification',
@@ -16,22 +18,22 @@ describe('Cancel Notification', () => {
       recipientId: 'recipient-id',
     });
 
-    await cancelNotification.execute({
+    await readNotification.execute({ notificationId: notification.id });
+
+    await unreadNotification.execute({
       notificationId: notification.id,
     });
 
-    expect(notificationsRepository.notifications[0].canceledAt).toEqual(
-      expect.any(Date),
-    );
+    expect(notificationsRepository.notifications[0].readAt).toBeNull();
   });
 
-  it('should not be able to cancel a non existing notification', async () => {
+  it('should not be able to unread a non existing notification', async () => {
     const notificationsRepository = new InMemoryNotificationsRepository();
 
-    const cancelNotification = new CancelNotification(notificationsRepository);
+    const unreadNotification = new UnreadNotification(notificationsRepository);
 
     expect(() => {
-      return cancelNotification.execute({
+      return unreadNotification.execute({
         notificationId: 'fake-notification-id',
       });
     }).rejects.toThrow(NotificationNotFoundError);

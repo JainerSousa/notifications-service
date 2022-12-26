@@ -30,7 +30,7 @@
         "./src/infra/*"
       ],
       "@test/*": [
-        "./test/*"
+        "./src/app/test/*"
       ]
     }
   }

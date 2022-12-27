@@ -21,12 +21,16 @@ export class CancelNotification {
       notificationId,
     );
 
+    console.log(notification);
+
     if (!notification) {
       throw new NotificationNotFoundError();
     }
 
     notification.cancel();
 
-    this.notificationsRepository.save(notification);
+    console.log(notification);
+
+    await this.notificationsRepository.save(notification);
   }
 }

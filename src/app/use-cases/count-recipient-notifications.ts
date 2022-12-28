@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { NotificationsRepository } from '@application/repositories/notifications-repository';
 
 interface CountRecipientNotificationsRequest {
@@ -8,6 +9,7 @@ interface CountRecipientNotificationsResponse {
   count: number;
 }
 
+@Injectable()
 export class CountRecipientNotifications {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
